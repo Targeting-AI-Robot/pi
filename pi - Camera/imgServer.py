@@ -17,24 +17,24 @@ encode_param=[int(cv2.IMWRITE_JPEG_QUALITY),90]
 # return frame1, frame2
 # Not implemented yet
 def getFrame():
-	return None, None
+    return None, None
 
 while True:
     req = conn.recv(1024)
-	# send frame when it receive 'req'
+    # send frame when it receive 'req'
     if req.decode() == 'req':
-		frame1, frame2 = getFrame()
-		
-		result1, imgencode1 = cv2.imencode('.jpg', frame1, encode_param)
-		data1 = np.array(imgencode1)
-		stringData1 = data1.tostring()
-		
-		result2, imgencode2 = cv2.imencode('.jpg', frame2, encode_param)
-		data2 = np.array(imgencode2)
-		stringData2 = data2.tostring()
-	
+        frame1, frame2 = getFrame()
+        
+        result1, imgencode1 = cv2.imencode('.jpg', frame1, encode_param)
+        data1 = np.array(imgencode1)
+        stringData1 = data1.tostring()
+        
+        result2, imgencode2 = cv2.imencode('.jpg', frame2, encode_param)
+        data2 = np.array(imgencode2)
+        stringData2 = data2.tostring()
+    
         conn.send( str(len(stringData1)).ljust(16));
         conn.send( stringData1 );
-		
-		conn.send( str(len(stringData2)).ljust(16));
+        
+        conn.send( str(len(stringData2)).ljust(16));
         conn.send( stringData2 );
